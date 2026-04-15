@@ -180,8 +180,8 @@ const Guide = () => {
               <strong> Never pay for a job without a verified employment contract and visa copy.</strong>
             </p>
             <div className="warning-ctas">
-              <a href="https://www.youtube.com/@dktechnical26" target="_blank" rel="noopener noreferrer" className="btn-warning-premium">Watch Fraud Exposure Videos</a>
-              <a href="https://www.youtube.com/@dktechnical26" target="_blank" rel="noopener noreferrer" className="link-verify">Verify Agency License <ArrowUpRight size={16} /></a>
+              <a href="https://www.youtube.com/@dktechnical26" target="_blank" className="btn-warning-premium">Watch Fraud Exposure Videos</a>
+              <a href="#" className="link-verify">Verify Agency License <ArrowUpRight size={16} /></a>
             </div>
           </div>
         </motion.div>
