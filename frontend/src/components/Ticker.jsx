@@ -13,21 +13,34 @@ const Ticker = () => {
 
   const fetchTaglines = async () => {
     try {
-      const { data, error } = await supabase
+      // First try to fetch only active taglines
+      let { data, error } = await supabase
         .from('taglines')
         .select('*')
-        .order('id', { ascending: false });
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+      
+      // If none are active, fetch the latest few as fallback
+      if (!error && (!data || data.length === 0)) {
+        const { data: latestData, error: latestError } = await supabase
+          .from('taglines')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(3);
+        data = latestData;
+        error = latestError;
+      }
       
       if (error) {
-        // Fallback default taglines if table doesn't exist yet
+        // Fallback default taglines if table doesn't exist or query fails
         setTaglines([
-          { text: "Latest Gulf Recruitment Drives for May 2026 are now open!", icon: 'zap' },
-          { text: "Verify your visa documents through our official guide.", icon: 'shield' },
-          { text: "New E&I technical training modules released on YouTube.", icon: 'play' }
+          { content: "Latest Gulf Recruitment Drives for May 2026 are now open!", icon: 'zap' },
+          { content: "Verify your visa documents through our official guide.", icon: 'shield' },
+          { content: "New E&I technical training modules released on YouTube.", icon: 'play' }
         ]);
       } else {
         setTaglines(data.length > 0 ? data : [
-           { text: "Welcome to DK Technical — Your trusted Gulf career partner.", icon: 'sparkles' }
+           { content: "Welcome to DK Technical — Your trusted Gulf career partner.", icon: 'sparkles' }
         ]);
       }
     } catch (err) {
@@ -44,7 +57,7 @@ const Ticker = () => {
       borderBottom: '1px solid rgba(99, 102, 241, 0.15)',
       overflow: 'hidden',
       height: '40px',
-      marginTop: 'var(--nav-height)',
+      marginTop: 0,
       display: 'flex',
       alignItems: 'center',
       zIndex: 4998,
@@ -83,7 +96,8 @@ const Ticker = () => {
           paddingLeft: '180px'
         }}
       >
-        {[...taglines, ...taglines].map((tag, idx) => (
+        {/* Repeat many times to ensure continuous flow */}
+        {[...taglines, ...taglines, ...taglines, ...taglines].map((tag, idx) => (
           <div key={idx} style={{
             display: 'flex',
             alignItems: 'center',
@@ -93,7 +107,7 @@ const Ticker = () => {
             fontWeight: 600
           }}>
             <Zap size={14} color="var(--primary)" />
-            {tag.text}
+            {tag.content || tag.text}
           </div>
         ))}
       </motion.div>

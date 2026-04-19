@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { 
   Wrench, 
   Mail, 
@@ -20,6 +22,40 @@ import {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+  const { user, supabase } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email || submitting) return;
+
+    if (!user) {
+      // Indirect to login page with pre-filled email
+      navigate(`/login?email=${encodeURIComponent(email)}&reason=subscribe`);
+      return;
+    }
+
+    setSubmitting(true);
+    setStatus(null);
+    try {
+      const { error } = await supabase
+        .from('subscribers')
+        .upsert([{ email: email, user_id: user.id, status: 'active' }]);
+      
+      if (error) throw error;
+      setStatus({ type: 'success', message: 'Successfully subscribed for alerts!' });
+      setEmail('');
+    } catch (err) {
+      console.error(err);
+      setStatus({ type: 'error', message: 'Could not subscribe. Please try again.' });
+    } finally {
+      setSubmitting(false);
+      setTimeout(() => setStatus(null), 5000);
+    }
+  };
 
   const footerLinks = {
     "Quick Links": [
@@ -108,22 +144,43 @@ const Footer = () => {
               Subscribe for daily Gulf & Europe job vacancy alerts.
             </p>
             <div className="newsletter-form" style={{ position: 'relative' }}>
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                style={{ 
-                  width: '100%', padding: '15px 20px', background: 'rgba(255,255,255,0.03)', 
-                  border: '1px solid var(--border-glass)', borderRadius: '12px', color: 'white',
-                  outline: 'none', transition: 'var(--transition)'
-                }}
-              />
-              <button 
-                className="btn-premium" 
-                style={{ padding: '8px 15px', borderRadius: '8px', position: 'absolute', right: '5px', top: '5px' }}
-              >
-                <ArrowRight size={18} />
-              </button>
+              <form onSubmit={handleSubscribe}>
+                <input 
+                  type="email" 
+                  required
+                  placeholder="Email Address" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ 
+                    width: '100%', padding: '15px 20px', background: 'rgba(255,255,255,0.03)', 
+                    border: '1px solid var(--border-glass)', borderRadius: '12px', color: 'white',
+                    outline: 'none', transition: 'var(--transition)',
+                    paddingRight: '60px'
+                  }}
+                />
+                <button 
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-premium" 
+                  style={{ padding: '8px 15px', borderRadius: '8px', position: 'absolute', right: '5px', top: '5px' }}
+                >
+                  <ArrowRight size={18} />
+                </button>
+              </form>
             </div>
+            {status && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ 
+                  marginTop: '15px', fontSize: '0.8rem', 
+                  color: status.type === 'success' ? '#4ade80' : '#f87171',
+                  fontWeight: 600 
+                }}
+              >
+                {status.message}
+              </motion.div>
+            )}
             
             <div style={{ marginTop: '30px', display: 'grid', gap: '12px' }}>
               <motion.a href="https://www.youtube.com/@dktechnical26" target="_blank" rel="noopener noreferrer" whileHover={{ x: 5 }} style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.85rem', color: 'var(--text-muted)', transition: 'var(--transition)' }}>
@@ -143,6 +200,18 @@ const Footer = () => {
                    <Send size={14} color="white" />
                 </div>
                 Telegram: @dktechnical26
+              </motion.a>
+              <motion.a 
+                href="https://www.facebook.com/profile.php?id=61582131756115"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ x: 5 }}
+                style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.85rem', color: 'var(--text-muted)', transition: 'var(--transition)' }}
+              >
+                <div style={{ background: '#1877F2', padding: '6px', borderRadius: '6px', display: 'flex' }}>
+                   <Share size={14} color="white" />
+                </div>
+                Facebook: Dk Technical
               </motion.a>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                 <div style={{ background: 'var(--primary)', padding: '6px', borderRadius: '6px', display: 'flex' }}>

@@ -7,39 +7,42 @@
    ═══════════════════════════════════════════ */
 
 :root {
-  /* Hyper-Premium Palette — Refined HSL for better control */
-  --primary: hsl(239, 84%, 67%);      /* #6366f1 equivalent but refined */
-  --primary-light: hsl(234, 89%, 74%);
-  --primary-dark: hsl(243, 75%, 59%);
-  --primary-glow: hsla(239, 84%, 67%, 0.35);
+  /* Hyper-Premium Palette — New Heritage Red & Prussian Blue */
+  --primary: #C1121F;      /* Fire Engine Red */
+  --primary-light: #d8454f;
+  --primary-dark: #780000;
+  --primary-glow: rgba(193, 18, 31, 0.25);
   
-  --secondary: hsl(271, 91%, 65%);
-  --secondary-light: hsl(271, 91%, 75%);
-  --secondary-glow: hsla(271, 91%, 65%, 0.2);
+  --secondary: #780000;    /* Barn Red */
+  --secondary-light: #C1121F;
+  --secondary-glow: rgba(120, 0, 0, 0.2);
   
-  --accent: hsl(188, 86%, 53%);
-  --accent-glow: hsla(188, 86%, 53%, 0.2);
+  --accent: #669BBC;       /* Aero Blue */
+  --accent-glow: rgba(102, 155, 188, 0.2);
 
-  /* Backgrounds — Deep Obsidian */
-  --bg-dark: hsl(222, 47%, 5%);
-  --bg-darker: hsl(222, 47%, 2%);
-  --bg-card: hsla(222, 47%, 10%, 0.4);
-  --bg-elevated: hsla(222, 47%, 15%, 0.6);
+  /* Backgrounds — Deep Prussian Blue */
+  --bg-dark: #003049;
+  --bg-darker: #002538;
+  --bg-card: rgba(0, 48, 73, 0.6);
+  --bg-elevated: rgba(0, 48, 73, 0.8);
 
-  /* Text — Crisp Slate */
-  --text-main: hsl(210, 40%, 98%);
-  --text-muted: hsl(215, 25%, 65%);
-  --text-bright: #ffffff;
+  /* Text — Papaya Whip (Cream) */
+  --text-main: #FDF0D5;
+  --text-muted: #669BBC;    /* Using Aero Blue for muted text */
+  --text-bright: #FDF0D5;
 
   /* Glassmorphism & Borders */
-  --glass: hsla(222, 47%, 5%, 0.8);
-  --glass-light: hsla(0, 0%, 100%, 0.03);
-  --border-glass: hsla(0, 0%, 100%, 0.08);
-  --border-hover: hsla(239, 84%, 67%, 0.5);
+  --glass: rgba(0, 48, 73, 0.85);
+  --glass-light: rgba(253, 240, 213, 0.05); /* Light cream glass */
+  --border-glass: rgba(253, 240, 213, 0.1);
+  --border-hover: #C1121F;
 
   /* Advanced Gradients */
   --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  --gradient-surface: linear-gradient(to bottom right, hsla(0, 0%, 100%, 0.05), transparent);
+  --gradient-surface: linear-gradient(to bottom right, rgba(253, 240, 213, 0.05), transparent);
+  --gradient-radial: radial-gradient(circle at 0% 0%, rgba(193, 18, 31, 0.1) 0%, transparent 50%), 
+                     radial-gradient(circle at 100% 100%, rgba(102, 155, 188, 0.05) 0%, transparent 50%);
+  --gradient-dark: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
 
   /* Layout Tokens */
   --nav-height: 85px;
@@ -137,12 +140,27 @@ body::after {
   color: var(--primary) !important;
 }
 
-.search-box-premium {
-  background: hsla(222, 47%, 10%, 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border-glass);
-  transition: var(--transition);
-}
+  .search-box-premium {
+    flex-direction: column !important;
+    border-radius: 20px !important;
+    padding: 15px !important;
+    gap: 15px !important;
+  }
+  
+  .search-box-premium input {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  .search-box-premium div:first-child {
+    display: none !important;
+  }
+
+  .search-box-premium #home-search-btn {
+    position: static !important;
+    width: 100% !important;
+    height: 50px !important;
+  }
 
 .search-box-premium:focus-within {
   border-color: var(--primary);
@@ -207,6 +225,34 @@ body::after {
   filter: brightness(1.1);
 }
 
+/* ── Promotion Banner Responsiveness ── */
+@media (max-width: 900px) {
+  .promotion-banner .glass-panel {
+    flex-direction: column !important;
+  }
+  
+  .promotion-banner .banner-visual {
+    min-height: 300px;
+    border-left: none !important;
+    border-top: 1px solid var(--border-glass);
+  }
+
+  .promotion-banner .glass-panel > div:first-child {
+    padding: 40px 30px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .promotion-banner .btn-premium {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .promotion-banner .container {
+    padding: 0 1rem;
+  }
+}
+
 
 /* ═══════════════════════════════
    ABOUT PAGE — PREMIUM ENHANCED
@@ -219,11 +265,72 @@ body::after {
   align-items: center;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 900px) {
   .about-hero-grid-advanced {
     grid-template-columns: 1fr;
     gap: 60px;
     text-align: center;
+  }
+}
+
+/* ── General Mobile Fixes ── */
+@media (max-width: 768px) {
+  .hero-title-main {
+    font-size: 2.8rem !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+  }
+
+  .brand-logo-grid {
+    gap: 40px !important;
+  }
+  
+  .impact-stats-panel {
+    padding: 25px 15px !important;
+    border-radius: 25px !important;
+    gap: 20px !important;
+  }
+  
+  .hero-advanced .container {
+    padding-top: 60px !important;
+  }
+
+  .nav-logo-container .logo-text-stack {
+    max-width: 150px;
+  }
+
+  .footer-brand .nav-logo-container {
+    transform: scale(0.8);
+    transform-origin: left;
+  }
+
+  .ticker-container-middle {
+    padding: 15px 0 !important;
+  }
+  
+  .ticker-container-middle > div:first-child {
+    padding: 0 15px !important;
+    font-size: 0.6rem !important;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title-main {
+    font-size: 2.2rem !important;
+  }
+
+  .trust-indicators-row {
+    flex-direction: column !important;
+    gap: 15px !important;
+    margin-top: 3rem !important;
+  }
+  
+  .impact-stats-panel {
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -1740,6 +1847,15 @@ textarea:focus {
   .contact-layout-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .contact-form-glass form > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .about-hero-text {
+    padding-top: 40px;
   }
 }
 

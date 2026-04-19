@@ -236,9 +236,9 @@ const About = () => {
 
   const stats = [
     { val: '18.5', suffix: 'K+', label: 'Total Views', icon: <Eye size={24} /> },
-    { val: '160', suffix: '+', label: 'Subscribers', icon: <Users size={24} /> },
+    { val: '160', suffix: '+', label: 'YouTube Subscribers', icon: <Users size={24} /> },
+    { val: '22', suffix: 'K+', label: 'FB Followers', icon: <Users size={24} /> },
     { val: '89', suffix: '+', label: 'Videos', icon: <Video size={24} /> },
-    { val: '24', suffix: '/7', label: 'Support', icon: <Clock size={24} /> },
   ];
 
   const skills = [
@@ -677,6 +677,15 @@ const About = () => {
               <motion.a href="https://t.me/dktechnical26" target="_blank" rel="noopener noreferrer" className="social-pill" whileHover={{ scale: 1.08, y: -5 }}>
                 <Send size={18} /> Telegram
               </motion.a>
+              <motion.a 
+                href="https://www.facebook.com/profile.php?id=61582131756115"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-pill"
+                whileHover={{ scale: 1.08, y: -5 }}
+              >
+                <Users size={18} /> Facebook
+              </motion.a>
               <motion.a href="https://www.instagram.com/d.ktiwari021783" target="_blank" rel="noopener noreferrer" className="social-pill" whileHover={{ scale: 1.08, y: -5 }}>
                 <Globe size={18} /> Instagram
               </motion.a>
@@ -691,7 +700,7 @@ const About = () => {
           </h2>
           <div className="achievements-grid">
             <AchievementBadge idx={0} icon={<Trophy size={40} />} title="15+ Years Expert" description="Industry veteran in E&I with over a decade of hands-on experience in global industrial projects" />
-            <AchievementBadge idx={1} icon={<Users size={40} />} title="21K+ Community" description="A trusted and growing network of skilled professionals across Facebook and YouTube" />
+            <AchievementBadge idx={1} icon={<Users size={40} />} title="22K+ Followers" description="A trusted and growing network of skilled professionals across Facebook and YouTube" />
             <AchievementBadge idx={2} icon={<Globe size={40} />} title="Euro-Gulf Focus" description="Specialized guidance for premium opportunities in Jordan, Italy, Albania, and the Gulf region" />
             <AchievementBadge idx={3} icon={<Award size={40} />} title="Mumbai & Cochin Hubs" description="Directly supporting offline interview drives and verified recruitment offices in major Indian cities" />
             <AchievementBadge idx={4} icon={<Globe size={40} />} title="Multi-Regional" description="Active partnerships with agencies across KSA, UAE, Qatar, and Germany" />

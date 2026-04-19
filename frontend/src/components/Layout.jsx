@@ -21,15 +21,16 @@ const Layout = ({ children }) => {
   const location = useLocation();
 
   return (
-    <div className={`app-container ${is3D ? 'mode-3d' : 'mode-2d'}`} style={{
-      perspective: is3D ? '2000px' : 'none',
-      overflowX: 'hidden',
-      minHeight: '100vh',
-      background: 'var(--bg-dark)'
-    }}>
+    <>
       <ScrollToTop />
       <Navbar />
       <Ticker />
+      <div className={`app-container ${is3D ? 'mode-3d' : 'mode-2d'}`} style={{
+        perspective: is3D ? '2000px' : 'none',
+        overflowX: 'hidden',
+        minHeight: '100vh',
+        background: 'var(--bg-dark)'
+      }}>
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
@@ -38,7 +39,7 @@ const Layout = ({ children }) => {
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.4, ease: 'easeInOut' }}
           style={{
-            paddingTop: 'var(--nav-height)',
+            paddingTop: 0,
             transformStyle: 'preserve-3d',
             transform: is3D ? 'rotateX(5deg) scale(0.98)' : 'none',
             transition: 'transform 1s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -48,8 +49,9 @@ const Layout = ({ children }) => {
         </motion.main>
       </AnimatePresence>
       <Footer />
+      </div>
       <ViewSwitcher />
-    </div>
+    </>
   );
 };
 

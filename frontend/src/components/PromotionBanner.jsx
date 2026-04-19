@@ -45,7 +45,7 @@ const PromotionBanner = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-premium" 
-                style={{ background: '#ff0000', borderRadius: '50px', padding: '1rem 3rem', textDecoration: 'none', color: 'white' }}
+                style={{ background: 'var(--primary)', borderRadius: '50px', padding: '1rem 3rem', textDecoration: 'none', color: 'white' }}
               >
                 SUBSCRIBE ON YOUTUBE
               </motion.a>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { LogIn, Shield, Users, ArrowRight, CheckCircle, Lock, Mail, Key } from 'lucide-react';
@@ -12,6 +12,22 @@ const Login = () => {
   const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle pre-filled email from footer subscription
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const prefillEmail = params.get('email');
+    const reason = params.get('reason');
+    
+    if (prefillEmail) {
+      setEmail(prefillEmail);
+    }
+    
+    if (reason === 'subscribe') {
+      setError('Please sign in to complete your subscription for job alerts.');
+    }
+  }, [location]);
 
   // If already logged in, redirect to correct dashboard
   React.useEffect(() => {
@@ -131,8 +147,10 @@ const Login = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             style={{ 
-              padding: '12px', borderRadius: '10px', background: 'rgba(239, 68, 68, 0.1)', 
-              border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', 
+              padding: '12px', borderRadius: '10px', 
+              background: error.includes('complete your subscription') ? 'rgba(99, 102, 241, 0.1)' : 'rgba(239, 68, 68, 0.1)', 
+              border: `1px solid ${error.includes('complete your subscription') ? 'rgba(99, 102, 241, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`, 
+              color: error.includes('complete your subscription') ? 'var(--primary-light)' : '#f87171', 
               fontSize: '0.85rem', marginBottom: '1.5rem', textAlign: 'center' 
             }}
           >

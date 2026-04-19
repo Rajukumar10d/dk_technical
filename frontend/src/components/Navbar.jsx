@@ -37,13 +37,14 @@ const Navbar = () => {
     <nav 
       className={`navbar-main ${scrolled ? 'scrolled' : ''}`}
       style={{
-        position: 'fixed', width: '100%', top: 0, zIndex: 5000, 
+        position: 'sticky', top: 0, zIndex: 5000, 
         display: 'flex', justifyContent: 'space-between', padding: '0 clamp(1rem, 5vw, 4rem)', alignItems: 'center',
         background: scrolled ? 'rgba(2, 6, 23, 0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(20px)' : 'none',
         height: 'var(--nav-height)',
         borderBottom: scrolled ? '1px solid var(--border-glass)' : 'none',
-        transition: 'var(--transition)'
+        transition: 'var(--transition)',
+        width: '100%'
       }}
     >
       <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
@@ -122,7 +123,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Toggle */}
-      <div className="mobile-only" style={{ display: 'none' }}>
+      <div className="mobile-only">
          <button 
            onClick={() => setIsOpen(!isOpen)}
            style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: '10px' }}
